@@ -908,6 +908,8 @@ static const CGFloat kScrollViewBottomSpace = 5;
 }
 
 - (void)setup {
+    _isOpen = NO;
+
     self.contentViewController = [MKDropdownMenuContentViewController new];
     self.contentViewController.delegate = self;
     
@@ -1328,6 +1330,7 @@ static const CGFloat kScrollViewBottomSpace = 5;
     void (^presentation)() = ^{
         self.selectedComponent = component;
         [self presentDropdownForSelectedComponentAnimated:animated completion:nil];
+        _isOpen = YES;
         if (component != -1 && [self.delegate respondsToSelector:@selector(dropdownMenu:didOpenComponent:)]) {
             [self.delegate dropdownMenu:self didOpenComponent:component];
         }
@@ -1337,6 +1340,7 @@ static const CGFloat kScrollViewBottomSpace = 5;
         [self dismissDropdownAnimated:animated completion:^{
             presentation();
         }];
+        _isOpen = NO;
         if ([self.delegate respondsToSelector:@selector(dropdownMenu:didCloseComponent:)]) {
             [self.delegate dropdownMenu:self didCloseComponent:previousComponent];
         }
@@ -1407,6 +1411,7 @@ static const CGFloat kScrollViewBottomSpace = 5;
 - (void)cleanupSelectedComponents {
     NSInteger previousComponent = self.selectedComponent;
     self.selectedComponent = -1;
+    _isOpen = NO;
     if (previousComponent != -1 && [self.delegate respondsToSelector:@selector(dropdownMenu:didCloseComponent:)]) {
         [self.delegate dropdownMenu:self didCloseComponent:previousComponent];
     }

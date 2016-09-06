@@ -93,6 +93,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (assign, nonatomic) BOOL allowsMultipleSelection; // default = NO
 
+@property (assign, nonatomic) BOOL isOpen;
+
 // cached info from the data source
 - (NSInteger)numberOfComponents;
 - (NSInteger)numberOfRowsInComponent:(NSInteger)component;
